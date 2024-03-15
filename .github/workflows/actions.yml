@@ -85,9 +85,9 @@ jobs:
 
       - name: Create Terraform Init Backend Configuration
         run: |
-          BACKEND_BUCKET_UC=$(jq -r .backend_bucket_uc < ../test/databricks_${{ env.TF_VAR_environment }}/tf_s3_backend_config.json)
-          BACKEND_BUCKET_DEV=$(jq -r .backend_bucket_dev < ../test/databricks_${{ env.TF_VAR_environment }}/tf_s3_backend_config.json)
-          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ../test/databricks_${{ env.TF_VAR_environment }}/tf_s3_backend_config.json)
+          BACKEND_BUCKET_UC=$(jq -r .backend_bucket_uc < ../test/tf_s3_backend_config.json)
+          BACKEND_BUCKET_DEV=$(jq -r .backend_bucket_dev < ../test/tf_s3_backend_config.json)
+          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ../test/tf_s3_backend_config.json)
           echo "BACKEND_BUCKET_UC=$BACKEND_BUCKET_UC" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_DEV=$BACKEND_BUCKET_DEV" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_PROD=$BACKEND_BUCKET_PROD" >> $GITHUB_ENV
@@ -115,9 +115,9 @@ jobs:
           export AWS_REGION="${{ env.TF_VAR_aws_region }}"
           export ACCESS_KEY="${{ env.TF_VAR_aws_access_key_id }}"
           export SECRET_KEY="${{ env.TF_VAR_aws_access_key_secret}}"
-          chmod +x ../test/databricks_${{ env.TF_VAR_environment }}/tf_s3_backend_deploy.sh
+          chmod +x ../test/tf_s3_backend_deploy.sh
           cd ../test
-          ./databricks_${{ env.TF_VAR_environment }}/tf_s3_backend_deploy.sh
+          ./tf_s3_backend_deploy.sh
 
 
       - name: Update Terraform Deploy Environment Variable
