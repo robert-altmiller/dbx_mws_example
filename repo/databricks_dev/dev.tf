@@ -66,14 +66,14 @@ module "databricks_workspace" {
 }
 
 
-provider "databricks" {
-  // other configuration
-  provider = databricks.mws
-  account_id = var.databricks_account_id
-}
+# provider "databricks" {
+#   // other configuration
+#   provider = databricks.mws
+#   account_id = var.databricks_account_id
+# }
 
-data "databricks_mws_workspaces" "all" {}
+# data "databricks_mws_workspaces" "all" {}
 
-output "all_mws_workspaces" {
-  value = data.databricks_mws_workspaces.all.ids
-}
+# output "all_mws_workspaces" {
+#   value = data.databricks_mws_workspaces.all.ids
+# }
