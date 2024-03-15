@@ -37,6 +37,3 @@ provider "databricks" {
   client_id     = var.databricks_client_id
   client_secret = var.databricks_client_secret
 }
-
-data "databricks_workspace" "this" {
-}
