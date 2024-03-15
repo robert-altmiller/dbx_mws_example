@@ -58,10 +58,21 @@ module "databricks_workspace" {
     aws_account_id        = var.aws_account_id
     databricks_account_id = var.databricks_account_id
     resource_prefix       = var.resource_prefix
-    workspace_id          = databricks_workspace.this.workspace_id
+    workspace_id          = local.workspace_id
     uc_catalog_name       = "${var.resource_prefix}-catalog-${data.databricks_workspace.this.workspace_id}"
     workspace_catalog_admin = var.user_name
     team = var.team
   
 }
 
+
+provider "databricks" {
+  // other configuration
+  account_id = var.databricks_account_id
+}
+
+data "databricks_mws_workspaces" "all" {}
+
+output "all_mws_workspaces" {
+  value = data.databricks_mws_workspaces.all.ids
+}
