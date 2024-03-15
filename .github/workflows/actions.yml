@@ -171,6 +171,6 @@ jobs:
         run: |
           if [[ "${{ env.databricks_destroy_all_resources }}" == "false" ]]; then
             terraform apply --auto-approve
-          elif [[ "${{ env.databricks_deploy_uc_external_location }}" == "true" ]]; then
+          elif [[ "${{ env.databricks_destroy_all_resources }}" == "true" ]]; then
             terraform destroy --auto-approve
           fi
