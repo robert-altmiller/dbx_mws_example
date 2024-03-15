@@ -68,6 +68,7 @@ module "databricks_workspace" {
 
 provider "databricks" {
   // other configuration
+  provider = databricks.mws
   account_id = var.databricks_account_id
 }
 

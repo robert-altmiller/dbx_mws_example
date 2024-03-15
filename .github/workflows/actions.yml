@@ -148,10 +148,11 @@ jobs:
         working-directory: repo/databricks_dev
 
           
-      # - name: Terraform Validate
-      #   run: |
-      #     export TF_LOG=DEBUG
-      #     terraform validate
+      - name: Terraform Validate
+        run: |
+          export TF_LOG=DEBUG
+          terraform validate
+        working-directory: repo/databricks_dev
   
   
       - name: Terraform Plan
@@ -161,7 +162,8 @@ jobs:
         working-directory: repo/databricks_dev
 
 
-      # - name: Terraform Apply
-      #   run: |
-      #     export TF_LOG=DEBUG
-      #     terraform apply
+      - name: Terraform Apply
+        run: |
+          export TF_LOG=DEBUG
+          terraform apply
+        working-directory: repo/databricks_dev
