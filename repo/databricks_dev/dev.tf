@@ -59,7 +59,7 @@ module "databricks_workspace" {
     databricks_account_id = var.databricks_account_id
     resource_prefix       = var.resource_prefix
     workspace_id          = local.workspace_id
-    uc_catalog_name       = "${var.resource_prefix}-catalog-${data.databricks_workspace.this.workspace_id}"
+    uc_catalog_name       = "${var.resource_prefix}-catalog-${local.workspace_id}"
     workspace_catalog_admin = var.user_name
     team = var.team
   
