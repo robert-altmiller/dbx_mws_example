@@ -5,7 +5,7 @@ module "uc_catalog" {
   aws_account_id          = var.aws_account_id
   resource_prefix         = var.resource_prefix
   uc_catalog_name         = "${var.resource_prefix}-catalog-${local.workspace_id}"
-  workspace_id            = var.workspace_id
+  workspace_id            = local.workspace_id
   workspace_catalog_admin = var.workspace_catalog_admin
   
 }
