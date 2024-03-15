@@ -6,5 +6,8 @@ locals {
   # client secret
   databricks_client_secret = lookup(var.databricks_client_secrets, var.environment)
   # aws workspace ida
-  workspace_id = element(split("=", var.url), length(split("=", var.url)) - 1)
+}
+
+locals {
+  workspace_id = element(split("=", local.databricks_instance), length(split("=", local.databricks_instance)) - 1)
 }
