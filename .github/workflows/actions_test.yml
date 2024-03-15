@@ -1,4 +1,4 @@
-name: Deploy Infrastructure
+name: Deploy Infrastructure Test
 
 on:
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./repo
+        working-directory: ./test
 
     env:
       TF_VAR_environment: ${{ github.event.inputs.ENVIRONMENT || secrets.ENVIRONMENT  }}
@@ -85,9 +85,9 @@ jobs:
 
       - name: Create Terraform Init Backend Configuration
         run: |
-          BACKEND_BUCKET_UC=$(jq -r .backend_bucket_uc < ./databricks_dev/tf_s3_backend_config.json)
-          BACKEND_BUCKET_DEV=$(jq -r .backend_bucket_dev < ./databricks_dev/tf_s3_backend_config.json)
-          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ./tesdatabricks_devt/tf_s3_backend_config.json)
+          BACKEND_BUCKET_UC=$(jq -r .backend_bucket_uc < ../test/tf_s3_backend_config.json)
+          BACKEND_BUCKET_DEV=$(jq -r .backend_bucket_dev < ../test/tf_s3_backend_config.json)
+          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ../test/tf_s3_backend_config.json)
           echo "BACKEND_BUCKET_UC=$BACKEND_BUCKET_UC" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_DEV=$BACKEND_BUCKET_DEV" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_PROD=$BACKEND_BUCKET_PROD" >> $GITHUB_ENV
@@ -115,8 +115,8 @@ jobs:
           export AWS_REGION="${{ env.TF_VAR_aws_region }}"
           export ACCESS_KEY="${{ env.TF_VAR_aws_access_key_id }}"
           export SECRET_KEY="${{ env.TF_VAR_aws_access_key_secret}}"
-          chmod +x ../databricks_dev/tf_s3_backend_deploy.sh
-          cd ./databricks_dev
+          chmod +x ../test/tf_s3_backend_deploy.sh
+          cd ../test
           ./tf_s3_backend_deploy.sh
 
 
@@ -159,7 +159,7 @@ jobs:
           export TF_LOG=DEBUG
           terraform plan
 
-
+          
       - name: Terraform Apply
         run: |
           export TF_LOG=DEBUG
