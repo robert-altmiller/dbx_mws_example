@@ -50,21 +50,21 @@ variable "databricks_account_id" {
 # databricks instance environment variable
 variable "databricks_instances" {
   description = "maps of Databricks instances secret passed from GitHub Actions"
-  type        = map(string)
+  type = map(string)
 }
 
 
-# # databricks client id environment variable (e.g. service principle id)
-# variable "databricks_client_ids" {
-#   description = "Map of Databricks client ids for different environments"
-#   type = map(string)
-# }
+# databricks client id environment variable (e.g. service principle id)
+variable "databricks_client_ids" {
+  description = "Map of Databricks client ids for different environments"
+  type = map(string)
+}
 
-# # databricks client secret environment variable (e.g. service principle secret)
-# variable "databricks_client_secrets" {
-#   description = "Map of Databricks client secrets for different environments"
-#   type = map(string)
-# }
+# databricks client secret environment variable (e.g. service principle secret)
+variable "databricks_client_secrets" {
+  description = "Map of Databricks client secrets for different environments"
+  type = map(string)
+}
 
 # databricks token
 variable "databricks_token" {
