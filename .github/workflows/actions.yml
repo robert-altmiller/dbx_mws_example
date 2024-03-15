@@ -154,7 +154,13 @@ jobs:
       #     terraform validate
   
   
-      # - name: Terraform Plan
-      #   run: |
-      #     export TF_LOG=DEBUG
-      #     terraform plan
+      - name: Terraform Plan
+        run: |
+          export TF_LOG=DEBUG
+          terraform plan
+
+          
+      - name: Terraform Apply
+        run: |
+          export TF_LOG=DEBUG
+          terraform apply
