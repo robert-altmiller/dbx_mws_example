@@ -115,7 +115,7 @@ jobs:
           export AWS_REGION="${{ env.TF_VAR_aws_region }}"
           export ACCESS_KEY="${{ env.TF_VAR_aws_access_key_id }}"
           export SECRET_KEY="${{ env.TF_VAR_aws_access_key_secret}}"
-          chmod +x ../databricks_dev/tf_s3_backend_deploy.sh
+          chmod +x ./databricks_dev/tf_s3_backend_deploy.sh
           cd ./databricks_dev
           ./tf_s3_backend_deploy.sh
 
@@ -134,9 +134,9 @@ jobs:
           export DATABRICKS_ACCOUNT_ID="${{ env.TF_VAR_databricks_account_id }}"
           export DATABRICKS_CLIENT_ID=$(echo $TF_VAR_databricks_client_ids | jq -r .${{env.TF_VAR_environment}})
           export DATABRICKS_CLIENT_SECRET=$(echo $TF_VAR_databricks_client_secrets | jq -r .${{env.TF_VAR_environment}})
-          pip3 install -r ../repo/common_code/python/requirements.txt
-          chmod +x ../repo/common_code/python/get_databricks_token.py
-          TF_VAR_databricks_token=$(python3 ../repo/common_code/python/get_databricks_token.py)
+          pip3 install -r ./common_code/python/requirements.txt
+          chmod +x ./common_code/python/get_databricks_token.py
+          TF_VAR_databricks_token=$(python3 ./common_code/python/get_databricks_token.py)
           echo "TF_VAR_databricks_token=$TF_VAR_databricks_token" >> $GITHUB_ENV
           echo "TF_VAR_databricks_token: $TF_VAR_databricks_token"
 
@@ -145,7 +145,6 @@ jobs:
         run: |
           export TF_LOG=DEBUG
           terraform init
-        # working-directory: ./repo/databricks_${{ env.TF_VAR_environment }}
 
           
       # - name: Terraform Validate
@@ -160,7 +159,7 @@ jobs:
           terraform plan
 
 
-      - name: Terraform Apply
-        run: |
-          export TF_LOG=DEBUG
-          terraform apply
+      # - name: Terraform Apply
+      #   run: |
+      #     export TF_LOG=DEBUG
+      #     terraform apply
