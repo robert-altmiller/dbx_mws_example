@@ -7,6 +7,10 @@ on:
         description: 'Deploy Environment (dev/prod)'
         required: true
         default: '[dev],prod' # install chrome extension for drop down menu (see readme)
+      DESTROY_RESOURCES: # variable
+        description: 'Destroy All Resources (true/false)'
+        required: false
+        default: '[false],true' # install chrome extension for drop down menu (see readme)
       DEPLOY_CLUSTERS: # variable
         description: 'Create Clusters (true/false/destroy)'
         required: true
@@ -66,6 +70,7 @@ jobs:
       databricks_deploy_uc_catalog: ${{ github.event.inputs.DEPLOY_UC_CATALOG || 'false' }}
       databricks_deploy_uc_schema: ${{ github.event.inputs.DEPLOY_UC_SCHEMA || 'false' }}
       databricks_deploy_delta_share: ${{ github.event.inputs.DEPLOY_DELTA_SHARE || 'false' }}
+      databricks_destroy_all_resources: ${{ github.event.inputs.DESTROY_RESOURCES || 'false' }}
 
     steps:
 
@@ -162,8 +167,10 @@ jobs:
         working-directory: repo/databricks_dev
 
 
-      - name: Terraform Apply
+      - name: Deploy / Destroy Unity Catalog External Location
         run: |
-          export TF_LOG=DEBUG
-          terraform apply --auto-approve
-        working-directory: repo/databricks_dev
+          if [[ "${{ env.databricks_destroy_all_resources }}" == "false" ]]; then
+            terraform apply --auto-approve
+          elif [[ "${{ env.databricks_deploy_uc_external_location }}" == "true" ]]; then
+            terraform destroy --auto-approve
+          fi
