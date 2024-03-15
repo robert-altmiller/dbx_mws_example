@@ -87,7 +87,7 @@ jobs:
         run: |
           BACKEND_BUCKET_UC=$(jq -r .backend_bucket_uc < ./databricks_dev/tf_s3_backend_config.json)
           BACKEND_BUCKET_DEV=$(jq -r .backend_bucket_dev < ./databricks_dev/tf_s3_backend_config.json)
-          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ./tesdatabricks_devt/tf_s3_backend_config.json)
+          BACKEND_BUCKET_PROD=$(jq -r .backend_bucket_prod < ./databricks_dev/tf_s3_backend_config.json)
           echo "BACKEND_BUCKET_UC=$BACKEND_BUCKET_UC" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_DEV=$BACKEND_BUCKET_DEV" >> $GITHUB_ENV
           echo "BACKEND_BUCKET_PROD=$BACKEND_BUCKET_PROD" >> $GITHUB_ENV
