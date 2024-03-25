@@ -55,18 +55,18 @@ jobs:
         chmod +x ./common_code/python/get_databricks_token.py
         TF_VAR_databricks_token=$(python3 ./common_code/python/get_databricks_token.py)
         echo "DATABRICKS_ACCOUNT_ID=$DATABRICKS_ACCOUNT_ID" >> $GITHUB_ENV
-        echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV        
-        echo "DATABRICKS_CLIENT_ID=$DATABRICKS_CLIENT_ID" >> $GITHUB_ENV
+        echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV
         echo "TF_VAR_databricks_token=$TF_VAR_databricks_token" >> $GITHUB_ENV
         echo "TF_VAR_databricks_token: $TF_VAR_databricks_token"
 
 
     - uses: databricks/setup-cli@main
 
-
-    - name: Deploy Bundle Workflows
+    - name: Deploy Asset Bundle to Databricks
       env:
-        DATABRICKS_BUNDLE_ENV: dev
+        DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
       run: |
+        cd databricks_${{ env.TF_VAR_environment }}/dabs
+        databricks configure --token --host ${{ env.DATABRICKS_HOST }}
         databricks bundle deploy

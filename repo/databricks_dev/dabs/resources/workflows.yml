@@ -1,11 +1,21 @@
 bundle:
   name: hello-bundle
 
+# resources:
+#   jobs:
+#     hello-job:
+#       name: hello-job
+#       tasks:
+#         - task_key: hello-task
+#           existing_cluster_id: 1119-211500-69ey7nkg
+#           notebook_task:
+#             notebook_path: ./hello.py
+
 targets:
   dev:
     default: true
     workspace:
-      host: ${DATABRICKS_HOST}
+      host: https://dbc-a49c6081-8a5a.cloud.databricks.com
     resources:
       jobs:
         hello-job:
