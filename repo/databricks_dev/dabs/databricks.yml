@@ -6,19 +6,26 @@ bundle:
 include:
   - resources/*.yml
 
-targets:
-  # The 'dev' target, for development purposes. This target is the default.
-  dev:
-    # We use 'mode: development' to indicate this is a personal development copy:
-    # - Deployed resources get prefixed with '[dev my_user_name]'
-    # - Any job schedules and triggers are paused by default
-    # - The 'development' mode is used for Delta Live Tables pipelines
-    mode: development
-    default: true
-    workspace:
-      host: ${DATABRICKS_HOST}
-    variables:
-      cluster_id: 1119-211500-69ey7nkg
+- hosts: all
+  tasks:
+    - name: Include tasks from another file
+      include_tasks: ./resources/workflows.yml
+      vars:
+        cluster_id: "1119-211500-69ey7nkg"
+
+
+# targets:
+#   # The 'dev' target, for development purposes. This target is the default.
+#   dev:
+#     # We use 'mode: development' to indicate this is a personal development copy:
+#     # - Deployed resources get prefixed with '[dev my_user_name]'
+#     # - Any job schedules and triggers are paused by default
+#     # - The 'development' mode is used for Delta Live Tables pipelines
+#     mode: development
+#     default: true
+#     workspace:
+#       host: ${DATABRICKS_HOST}
+
 
   ## Optionally, there could be a 'staging' target here.
   ## (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/ci-cd.html.)
