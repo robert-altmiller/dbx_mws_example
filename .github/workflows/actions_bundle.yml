@@ -66,6 +66,7 @@ jobs:
       env:
         DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
+        CLUSTER_ID: "1119-211500-69ey7nkg"
       run: |
         cd databricks_${{ env.TF_VAR_environment }}/dabs
         databricks configure --token --host ${{ env.DATABRICKS_HOST }}
