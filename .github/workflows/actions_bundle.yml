@@ -65,9 +65,9 @@ jobs:
 
 
     - name: Deploy Bundle Workflows
-      # env:
-      #   DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
-      #   DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
+      env:
+        DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
       run: |
         export DBRICKS_HOST=${{ env.DATABRICKS_HOST }}
         export DBRICKS_SP=${{ env.DATABRICKS_CLIENT_ID }}
