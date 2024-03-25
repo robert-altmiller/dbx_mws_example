@@ -72,6 +72,6 @@ jobs:
         export DBRICKS_HOST=${{ env.DATABRICKS_HOST }}
         export DBRICKS_SP=${{ env.DATABRICKS_CLIENT_ID }}
         cd databricks_${{ env.TF_VAR_environment }}/dabs
-        databricks configure --token --host ${{ env.DATABRICKS_HOST }}
+        # databricks configure --token --host ${{ env.DATABRICKS_HOST }}
         databricks bundle validate
         databricks bundle deploy
