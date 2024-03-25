@@ -66,5 +66,5 @@ jobs:
         cd databricks_${{ env.TF_VAR_environment }}/dabs
         # databricks bundle validate
         # databricks bundle deploy
-        databricks configure --token ${{ env.DATABRICKS_TOKEN }} --host ${{ env.DATABRICKS_HOST }}
+        databricks configure --token --host ${{ env.DATABRICKS_HOST }}
         databricks bundle deploy --workspace-dir dabs --bundle dabs
