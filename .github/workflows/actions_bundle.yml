@@ -40,8 +40,10 @@ jobs:
       run: sudo apt-get install jq
 
     - name: Install Databricks CLI
-      run: pip install --upgrade databricks-cli
-
+      run: |
+        pip install databricks-cli
+        pip install --upgrade databricks-cli
+        
 
     - name: Get Databricks Authentication Token
       run: |
@@ -57,14 +59,14 @@ jobs:
         echo "TF_VAR_databricks_token=$TF_VAR_databricks_token" >> $GITHUB_ENV
         echo "TF_VAR_databricks_token: $TF_VAR_databricks_token"
 
-        
+
+    - uses: databricks/setup-cli@main
+
     - name: Deploy Asset Bundle to Databricks
       env:
         DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
       run: |
         cd databricks_${{ env.TF_VAR_environment }}/dabs
-        # databricks bundle validate
-        # databricks bundle deploy
-        # databricks configure --token --host ${{ env.DATABRICKS_HOST }}
-        databricks bundle deploy --workspace-dir dabs --bundle dabs
+        databricks configure --token --host ${{ env.DATABRICKS_HOST }}
+        #databricks bundle deploy --workspace-dir dabs --bundle dabs
