@@ -1,0 +1,67 @@
+name: Deploy Databricks Asset Bundle
+
+
+on:
+  workflow_dispatch:
+    inputs:
+      ENVIRONMENT: # variable
+        description: 'Deploy Environment (dev/prod)'
+        required: true
+        default: '[dev],prod' # install chrome extension for drop down menu (see readme)
+
+
+jobs:
+  deploy:
+    name: 'Terraform Plan and Apply'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./repo
+
+    env:
+      TF_VAR_environment: ${{ github.event.inputs.ENVIRONMENT || secrets.ENVIRONMENT  }}
+      TF_VAR_databricks_account_id: ${{ secrets.DATABRICKS_ACCOUNT_ID }}
+      TF_VAR_databricks_instances: '{"dev": "${{ secrets.DATABRICKS_INSTANCE_DEV }}", "prod": "${{ secrets.DATABRICKS_INSTANCE_PROD }}"}'
+      TF_VAR_databricks_client_ids: '{"dev": "${{ secrets.DATABRICKS_CLIENT_ID_DEV }}", "prod": "${{ secrets.DATABRICKS_CLIENT_ID_PROD }}"}'
+      TF_VAR_databricks_client_secrets: '{"dev": "${{ secrets.DATABRICKS_CLIENT_ID_SECRET_DEV }}", "prod": "${{ secrets.DATABRICKS_CLIENT_ID_SECRET_PROD }}"}'
+
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_TOKEN }}
+
+    - name: Set up latest version of Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Install Databricks CLI
+      run: pip install databricks-cli
+
+    - name: Get Databricks Authentication Token
+      run: |
+        export DATABRICKS_ACCOUNT_ID="${{ env.TF_VAR_databricks_account_id }}"
+        export DATABRICKS_HOST=$(echo $TF_VAR_databricks_instances | jq -r .${{env.TF_VAR_environment}})
+        export DATABRICKS_CLIENT_ID=$(echo $TF_VAR_databricks_client_ids | jq -r .${{env.TF_VAR_environment}})
+        export DATABRICKS_CLIENT_SECRET=$(echo $TF_VAR_databricks_client_secrets | jq -r .${{env.TF_VAR_environment}})
+        pip3 install -r ../repo/common_code/python/requirements.txt
+        chmod +x ../repo/common_code/python/get_databricks_token.py
+        TF_VAR_databricks_token=$(python3 ../repo/common_code/python/get_databricks_token.py)
+        echo "DATABRICKS_ACCOUNT_ID=$DATABRICKS_ACCOUNT_ID" >> $GITHUB_ENV
+        echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV
+        echo "TF_VAR_databricks_token=$TF_VAR_databricks_token" >> $GITHUB_ENV
+        echo "TF_VAR_databricks_token: $TF_VAR_databricks_token"
+
+    - name: Deploy Asset Bundle to Databricks
+      env:
+        DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
+      run: |
+        cd databricks_${{ env.TF_VAR_environment }}/dabs
+        databricks bundle validate
+        databricks bundle deploy
+        # databricks workspace import_dir ../repo/databricks_${{ env.TF_VAR_environment }}/dabs /path/in/databricks/workspace --overwrite
