@@ -18,3 +18,4 @@
 
 # state files
 *.tfstate
+.databricks
