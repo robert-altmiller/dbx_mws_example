@@ -6,15 +6,10 @@ bundle:
 include:
   - ./*.yml
 
-# Deployment targets.
 targets:
-  # The 'dev' target, for development purposes. This target is the default.
   dev:
-    # We use 'mode: development' to indicate this is a personal development copy.
-    # Any job schedules and triggers are paused by default
-    mode: development
     default: true
     workspace:
-      host: ${DATABRICKS_HOST}
-    run_as:
-      service_principal_name: ${DATABRICKS_CLIENT_ID}
+      host: https://dbc-a49c6081-8a5a.cloud.databricks.com/
+    # run_as:
+    #   service_principal_name: ${DATABRICKS_CLIENT_ID}
