@@ -48,9 +48,9 @@ jobs:
         export DATABRICKS_HOST=$(echo $TF_VAR_databricks_instances | jq -r .${{env.TF_VAR_environment}})
         export DATABRICKS_CLIENT_ID=$(echo $TF_VAR_databricks_client_ids | jq -r .${{env.TF_VAR_environment}})
         export DATABRICKS_CLIENT_SECRET=$(echo $TF_VAR_databricks_client_secrets | jq -r .${{env.TF_VAR_environment}})
-        pip3 install -r ../repo/common_code/python/requirements.txt
-        chmod +x ../repo/common_code/python/get_databricks_token.py
-        TF_VAR_databricks_token=$(python3 ../repo/common_code/python/get_databricks_token.py)
+        pip3 install -r ./common_code/python/requirements.txt
+        chmod +x ./common_code/python/get_databricks_token.py
+        TF_VAR_databricks_token=$(python3 ./common_code/python/get_databricks_token.py)
         echo "DATABRICKS_ACCOUNT_ID=$DATABRICKS_ACCOUNT_ID" >> $GITHUB_ENV
         echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV
         echo "TF_VAR_databricks_token=$TF_VAR_databricks_token" >> $GITHUB_ENV
