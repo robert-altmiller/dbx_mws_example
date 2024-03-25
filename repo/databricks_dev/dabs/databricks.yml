@@ -17,6 +17,8 @@ targets:
     default: true
     workspace:
       host: ${DATABRICKS_HOST}
+    variables:
+      cluster_id: ${CLUSTER_ID}
 
   ## Optionally, there could be a 'staging' target here.
   ## (See Databricks docs on CI/CD at https://docs.databricks.com/dev-tools/bundles/ci-cd.html.)
