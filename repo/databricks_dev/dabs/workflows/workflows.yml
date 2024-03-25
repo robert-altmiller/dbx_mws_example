@@ -1,0 +1,17 @@
+bundle:
+  name: hello-bundle
+
+targets:
+  dev:
+    default: true
+    workspace:
+      host: ${DATABRICKS_HOST}
+    resources:
+      jobs:
+        hello-job:
+          name: hello-job
+          tasks:
+            - task_key: hello-task
+              existing_cluster_id: ${CLUSTER_ID}
+              notebook_task:
+                notebook_path: ./hello.py
