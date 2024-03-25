@@ -70,5 +70,4 @@ jobs:
         DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
       run: |
         cd databricks_${{ env.TF_VAR_environment }}/dabs
-        databricks configure --token --host ${{ env.DATABRICKS_HOST }}
         databricks bundle deploy
