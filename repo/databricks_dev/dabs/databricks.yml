@@ -15,6 +15,6 @@ targets:
     mode: development
     default: true
     workspace:
-      host: ${DBRICKS_HOST}
+      host: ${DATABRICKS_HOST}
     run_as:
-      service_principal_name: ${DBRICKS_SP}
+      service_principal_name: ${DATABRICKS_CLIENT_ID}

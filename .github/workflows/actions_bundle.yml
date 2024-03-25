@@ -69,9 +69,6 @@ jobs:
         DATABRICKS_HOST: ${{ env.DATABRICKS_HOST }}
         DATABRICKS_TOKEN: ${{ env.TF_VAR_databricks_token }}
       run: |
-        # export CLUSTER_ID="1119-211500-69ey7nkg"
-        # export DBRICKS_HOST=${{ env.DATABRICKS_HOST }}
-        # export DBRICKS_SP=${{ env.DATABRICKS_CLIENT_ID }}
         cd databricks_${{ env.TF_VAR_environment }}/dabs
         databricks configure --token --host ${{ env.DATABRICKS_HOST }}
         databricks bundle deploy
