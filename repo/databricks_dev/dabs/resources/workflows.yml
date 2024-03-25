@@ -7,7 +7,7 @@ resources:
       name: hello-job
       tasks:
         - task_key: hello-task
-          existing_cluster_id: {{ cluster_id }}
+          existing_cluster_id: ${cluster_id}
           notebook_task:
             notebook_path: ./hello.py
 
